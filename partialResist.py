@@ -13,8 +13,8 @@ pattern4 = r"\(O([\s\S]*)$"
 df = pd.DataFrame()
 
 with open('FILENAMEHERE.csv') as csvfile:
-  spamreader = csv.DictReader(csvfile)
-  for row in spamreader:
+  reader = csv.DictReader(csvfile)
+  for row in reader:
     mod_string = re.sub(pattern, '', row["Event"])
     mod_string = re.sub(pattern2, '', mod_string)
     # remove potential overkill
