@@ -9,12 +9,13 @@ pattern = r"^[^\d]*"
 pattern2 = r"\*"
 pattern3 = r"[^\d]"
 pattern4 = r"\(O([\s\S]*)$"
+pattern5 = r"\D*"
 
 df = pd.DataFrame()
 
 with open('FILENAMEHERE.csv') as csvfile:
-  reader = csv.DictReader(csvfile)
-  for row in reader:
+  spamreader = csv.DictReader(csvfile)
+  for row in spamreader:
     mod_string = re.sub(pattern, '', row["Event"])
     mod_string = re.sub(pattern2, '', mod_string)
     # remove potential overkill
@@ -22,6 +23,10 @@ with open('FILENAMEHERE.csv') as csvfile:
     mod_string = mod_string.split(" ",1)
     if len(mod_string) > 1:
       mod_string[1] = re.sub(pattern3, '', mod_string[1])
+      mod_string[1] = re.sub(pattern5, '', mod_string[1])
+    #remove non-numbers
+    mod_string[0] = re.sub(pattern5, '', mod_string[0])
+    
   
     #remove blank lines (immune etc)
     if mod_string[0] != '':
